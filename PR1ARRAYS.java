@@ -28,18 +28,18 @@ public class PR1ARRAYS {
         }
 
     imprimir(aloj);
-
-    for(int e = 2;e<aloj.length;e++) {
-        System.out.println(contarVacios(e, aloj));
+    System.out.println("<----------------------------------------------------------->");
+    for(int e = 2;e<aloj[0].length;e++) {
+        System.out.println(contarNulosYVacios(e, aloj));
     }
-    for(int e = 2;e<aloj.length;e++) {
-        System.out.println(contarNulos(e, aloj));
+    System.out.println("<----------------------------------------------------------->");
+    for(int e = 3;e<aloj[0].length;e++) {
+        System.out.println(maxPerColumn(e, aloj));
     }
+    System.out.println("<----------------------------------------------------------->");
     
-    System.out.println("El mayor número de la columna 6 es " + getMaxValueInColumn(aloj,4));
-
 }
-public static float getMaxValueInColumn(String[][] matrix, float column) {
+/* public static float getMaxValueInColumn(String[][] matrix, float column) {
     float maxValue = 0;
 
     for (int i = 1; i < matrix.length; i++) {
@@ -53,7 +53,7 @@ public static float getMaxValueInColumn(String[][] matrix, float column) {
     }
 
     return maxValue;
-}
+} */
 
     public static int contarColumnas(File archivo){
         Scanner scanner;
@@ -102,24 +102,44 @@ public static float getMaxValueInColumn(String[][] matrix, float column) {
       }
     }
 
-    public static String contarNulos(int columna, String[][] matriz) {
+    public static String contarNulosYVacios(int columna, String[][] matriz) {
         int variable = 0;
+        int contadorVac = 0;
         for (int i = 0;i<matriz.length;i++) {
             if (matriz[i][columna] == null) {
                 variable+=1;
             }
-        }
-        return "La columna " + matriz[0][columna] + " tiene " + variable + " nulos.";
-    }
-
-    public static String contarVacios(int columna, String[][] matriz) {
-        int contadorVac = 0;
-        for (int i = 0;i<matriz.length;i++) {
-            if (matriz[i][columna].isEmpty() || matriz[i][columna].equals("")) {
+            else if (matriz[i][columna].isEmpty() || matriz[i][columna].equals("")) {
                 contadorVac+=1;
             }
         }
-        return "La columna " + matriz[0][columna] + " tiene " + contadorVac + " vacios."; 
-    
+        return "La columna " + matriz[0][columna] + " tiene " + variable + " nulos"+ " y tiene " + contadorVac + " vacios.";
+    }
+
+    public static String maxPerColumn(int columna, String[][] matriz) {
+        float max = 0;
+        
+        for (int i = 1;i<matriz.length;i++) {
+            if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
+                String datostring = matriz[i][columna];
+                String numstring = "";
+                for (int j = 0; j < datostring.length(); j++) {
+                    char c = datostring.charAt(j);
+                    if ((c >= '0' && c <= '9') || c == '.') {
+                        numstring += c;
+                    }           
+                }
+                if (numstring.length() > 0) {
+                    float numActual = Float.parseFloat(numstring);
+
+                    if (numActual > max) {
+                        max = numActual;
+                    }
+                }
+                
+                
+            }
+        }
+        return "La columna " + matriz[0][columna] + " tiene como número máximo " + max;
     }
 }
