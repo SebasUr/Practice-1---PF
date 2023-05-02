@@ -7,8 +7,6 @@ public class PR1ARRAYS {
         int columnas = contarColumnas(file);
         int filas = contarLineas(file);
         String[][] aloj = new String[filas][columnas];
-        int contadorV = 0;
-        int contadorN = 0;
 
         Scanner scanner;
         try {
@@ -29,23 +27,15 @@ public class PR1ARRAYS {
             e.printStackTrace();
         }
 
-        for(int a=0; a<aloj.length; a++){
-            for(int b=0; b < aloj[a].length; b++){
-                if(aloj[a][b] == null){
-                    contadorN += 1;
-                }
-                else if(aloj[a][b].isEmpty() || aloj[a][b].equals("")){
-                    contadorV += 1;
-                }
-
-            }
-        }
-
-
     imprimir(aloj);
-    System.out.println("El número de lineas vacías que hay es de: " + contadorV);
-    System.out.println("El número de lineas nulas que hay es de: " + contadorN);
-    System.out.println("El número de lineas nulas que hay es de: " + contadorN);
+
+    for(int e = 2;e<aloj.length;e++) {
+        System.out.println(contarVacios(e, aloj));
+    }
+    for(int e = 2;e<aloj.length;e++) {
+        System.out.println(contarNulos(e, aloj));
+    }
+    
     System.out.println("El mayor número de la columna 6 es " + getMaxValueInColumn(aloj,4));
 
 }
@@ -110,5 +100,26 @@ public static float getMaxValueInColumn(String[][] matrix, float column) {
         }
         System.out.println();
       }
+    }
+
+    public static String contarNulos(int columna, String[][] matriz) {
+        int variable = 0;
+        for (int i = 0;i<matriz.length;i++) {
+            if (matriz[i][columna] == null) {
+                variable+=1;
+            }
+        }
+        return "La columna " + matriz[0][columna] + " tiene " + variable + " nulos.";
+    }
+
+    public static String contarVacios(int columna, String[][] matriz) {
+        int contadorVac = 0;
+        for (int i = 0;i<matriz.length;i++) {
+            if (matriz[i][columna].isEmpty() || matriz[i][columna].equals("")) {
+                contadorVac+=1;
+            }
+        }
+        return "La columna " + matriz[0][columna] + " tiene " + contadorVac + " vacios."; 
+    
     }
 }
