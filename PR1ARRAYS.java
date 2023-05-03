@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 public class PR1ARRAYS {
     public static void main(String[] args){
-        File file = new File("./Medellin Agosto 2022.csv");
+        File file = new File("./Medellin Agosto 2022 (1).csv");
         int columnas = contarColumnas(file);
         int filas = contarLineas(file);
         String[][] aloj = new String[filas][columnas];
@@ -101,7 +101,7 @@ public class PR1ARRAYS {
         return "La columna " + matriz[0][columna] + " tiene " + variable + " nulos"+ " y tiene " + contadorVac + " vacios.";
     }
 
-    public static String maxPerColumn(int columna, String[][] matriz) {
+    public static String maxPerColumn(int columna, String[][] matriz){
         float max = 0;
         
         for (int i = 1;i<matriz.length;i++) {
@@ -122,9 +122,34 @@ public class PR1ARRAYS {
                     }
                 }
                 
+            }
+        }
+        float count = max;
+        float min = 0;
+        for (int i = 1;i<matriz.length;i++) {
+            if(matriz[i][columna] != null && !matriz[i][columna].isEmpty() && !matriz[i][columna].equals("")){
+                String datostring = matriz[i][columna];
+                String numstring = "";
+                for (int j = 0; j < datostring.length(); j++) {
+                    char c = datostring.charAt(j);
+                    if ((c >= '0' && c <= '9') || c == '.') {
+                        numstring += c;
+                    }           
+                }
+                if (numstring.length() > 0) {
+                    float numActual = Float.parseFloat(numstring);
+
+                    if (numActual < count) {
+                        min = numActual;
+                        count = numActual;
+                    }
+                }
+                
                 
             }
         }
-        return "La columna " + matriz[0][columna] + " tiene como número máximo " + max;
+        return "La columna " + matriz[0][columna] + " tiene como número máximo " + max + " y " + min + " como número mínimo.";
+
+        
     }
 }
