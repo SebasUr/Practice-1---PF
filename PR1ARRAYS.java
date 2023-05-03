@@ -39,21 +39,6 @@ public class PR1ARRAYS {
     System.out.println("<----------------------------------------------------------->");
     
 }
-/* public static float getMaxValueInColumn(String[][] matrix, float column) {
-    float maxValue = 0;
-
-    for (int i = 1; i < matrix.length; i++) {
-        String valueString = matrix[i][(int)column];
-        if (valueString != null && !valueString.isEmpty()) {
-            float value = Float.parseFloat(valueString);
-            if (value > maxValue) {
-                maxValue = value;
-            }
-        }
-    }
-
-    return maxValue;
-} */
 
     public static int contarColumnas(File archivo){
         Scanner scanner;
