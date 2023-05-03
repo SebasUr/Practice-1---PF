@@ -8,11 +8,8 @@ public class PR1OBJECTS {
 
         CSVAnalyzer analyzer = new CSVAnalyzer(file);
         analyzer.analyze();
-    }
-
-        
+    }       
 }
-
 
 class CSVAnalyzer {
     private String[][] data;
