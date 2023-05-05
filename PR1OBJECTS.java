@@ -86,6 +86,19 @@ class ColumnaCSV {  // Utilización de solo arreglos
         }
         return maximo;
     }
+    public double valorMinimo() throws NumberFormatException {
+        double minimo = Double.MAX_VALUE;
+        for (int i = 0; i < datos.length; i++) {
+            String dato = datos[i];
+            if (dato != null && !dato.equals("")) {
+                double valor = Double.parseDouble(dato.replace(",", "."));
+                if (valor < minimo) {
+                    minimo = valor;
+                }
+            }
+        }
+        return minimo;
+    }
     
     public int contarNulos() {
         int numNulos = 0;
