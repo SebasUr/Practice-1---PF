@@ -6,9 +6,96 @@ public class PR1OBJECTS {
     public static void main(String[] args) {
         File file = new File("./Medellin Agosto 2022.csv");
 
-        CSVAnalyzer analyzer = new CSVAnalyzer(file);
+        // Analyzer CSV - Analiza todo el archivo CSS e imprime en consola todos los datos en conjunto, con sus respectivas características.
+        
+/*         CSVAnalyzer analyzer = new CSVAnalyzer(file);
         analyzer.analyze();
-    }       
+ */
+        // Columna, Clase que recibe la columna y el archivo css para crear un objeto que alberga la columna y se pueden llamar métodos para ver sus características
+        
+        String archivoCSV = "./Medellin Agosto 2022.csv";
+        String nombreColumna = "\"TMAX\"";
+        try {
+            ColumnaCSV columna = new ColumnaCSV(nombreColumna, archivoCSV);
+            columna.imprimirColumna();
+            System.out.println("Valor máximo: " + columna.valorMaximo());
+            System.out.println("Número de datos nulos o vacíos: " + columna.contarNulos());
+        } catch (FileNotFoundException e) {
+            System.out.println("No se pudo leer el archivo CSV: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }          
+}
+
+class ColumnaCSV {  // Utilización de solo arreglos
+    
+    private String nombreColumna;
+    private String[] datos;
+    
+    public ColumnaCSV(String nombreColumna, String archivoCSV) throws FileNotFoundException {
+        this.nombreColumna = nombreColumna;
+        this.datos = leerDatosDeColumna(nombreColumna, archivoCSV);
+    }
+    
+    private String[] leerDatosDeColumna(String nombreColumna, String archivoCSV) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(archivoCSV));
+        String[] encabezados = scanner.nextLine().split(",");
+        int indiceColumna = -1;
+        for (int i = 0; i < encabezados.length; i++) {
+            if (encabezados[i].equals(nombreColumna)) {
+                indiceColumna = i;
+                break;
+            }
+        }
+        if (indiceColumna == -1) {
+            throw new IllegalArgumentException("No se encontró la columna " + nombreColumna + " en el archivo " + archivoCSV);
+        }
+        int numFilas = 0;
+        while (scanner.hasNextLine()) {
+            scanner.nextLine();
+            numFilas++;
+        }
+
+        String[] datos = new String[numFilas];
+        scanner = new Scanner(new File(archivoCSV));
+        scanner.nextLine();
+        int filaActual = 0;
+        while (scanner.hasNextLine()) {
+            String[] fila = scanner.nextLine().split(",");
+            datos[filaActual] = fila[indiceColumna];
+            filaActual++;
+        }
+        scanner.close();
+        return datos;
+    }
+    
+    public void imprimirColumna() {
+        System.out.println(nombreColumna);
+        for (String dato : datos) { // for - each
+            System.out.println(dato);
+        }
+    }
+    
+    public String valorMaximo() {
+        String maximo = datos[0];
+        for (int i = 1; i < datos.length; i++) {
+            if (datos[i].compareTo(maximo) > 0) {
+                maximo = datos[i];
+            }
+        }
+        return maximo;
+    }
+    
+    public int contarNulos() {
+        int numNulos = 0;
+        for (String dato : datos) {
+            if (dato == null || dato.equals("")) {
+                numNulos++;
+            }
+        }
+        return numNulos;
+    }
 }
 
 class CSVAnalyzer {
